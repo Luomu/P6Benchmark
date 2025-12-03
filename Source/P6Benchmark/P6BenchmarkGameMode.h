@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "P6BenchmarkResult.h"
+
 #include "P6BenchmarkGameMode.generated.h"
 
 class UP6BenchmarkDefinition;
@@ -23,11 +25,22 @@ public:
 	AP6BenchmarkGameMode();
 
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void Tick(float DeltaSeconds) override;
 
 	// Call if automatic startup is disabled
 	UFUNCTION(BlueprintCallable)
 	void StartBenchmark();
+
+	// Override this for custom handling results. By default this shows the default ResultsWidget class.
+	UFUNCTION(BlueprintNativeEvent)
+	void PresentResults(const FP6BenchmarkResult& Result);
+	virtual void PresentResults_Implementation(const FP6BenchmarkResult& Result);
+
+public:
+	// Result of the last benchmark
+	UPROPERTY(BlueprintReadOnly)
+	FP6BenchmarkResult BenchmarkResult;
 
 protected:
 	bool LoadAssets();
@@ -43,16 +56,18 @@ protected:
 	TSoftObjectPtr<UP6BenchmarkDefinition> BenchmarkDefinition;
 
 	UPROPERTY(transient);
-	ULevelSequencePlayer* SequencePlayer;
+	ULevelSequencePlayer* SequencePlayer = nullptr;
 
 	UPROPERTY(transient);
-	ALevelSequenceActor* SequenceActor;
+	ALevelSequenceActor* SequenceActor = nullptr;
 
-	int32 CurrentSection                = 0;
+	UPROPERTY(transient);
 	APlayerController* PlayerController = nullptr;
-	bool bRunning                       = false;
-	float FPSSum                        = 0.f;
-	int32 SampleCount                   = 0;
+
+	int32 CurrentSection = 0;
+	bool bRunning        = false;
+	float FPSSum         = 0.f;
+	int32 SampleCount    = 0;
 
 private:
 	void StartFPSChart();

@@ -12,7 +12,8 @@ public class P6Benchmark : ModuleRules
 			new string[]
 			{
 				"Core",
-				"LevelSequence"
+				"LevelSequence",
+				"UMG" // results widget
 			}
 			);
 
@@ -21,11 +22,12 @@ public class P6Benchmark : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
+				"DeveloperSettings",
 				"Engine",
+				"MovieScene", // Sequence player
 				"RenderCore", // For PSO status
 				//"Slate",
 				//"SlateCore",
-				"MovieScene"
 			}
 			);
 	}

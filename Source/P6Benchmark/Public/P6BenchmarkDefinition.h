@@ -24,9 +24,10 @@ public:
 
 	// List of level sequences to load and run
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Benchmark")
-	TArray<TSoftObjectPtr<ULevelSequence>> LevelSequences;
+	TSoftObjectPtr<ULevelSequence> LevelSequence;
 
 	// Game mode override, leave empty unless your project uses a custom benchmark GM.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Benchmark", meta = (AllowedClasses = "/Script/P6Benchmark.P6BenchmarkGameMode"))
-	FString GameModeOverride;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Benchmark", meta = (MetaClass = "/Script/P6Benchmark.P6BenchmarkGameMode"))
+	FSoftClassPath GameModeOverride;
 };
+

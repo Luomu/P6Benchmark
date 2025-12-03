@@ -60,9 +60,9 @@ void UP6BenchmarkStatics::LoadBenchmark(const UObject* WorldContextObject, UP6Be
 		return;
 	}
 
-	const FString GameModeName = BenchmarkDefinition->GameModeOverride.IsEmpty()
+	const FString GameModeName = BenchmarkDefinition->GameModeOverride.ToString().IsEmpty()
 	                                 ? "/Script/P6Benchmark.P6BenchmarkGameMode"
-	                                 : BenchmarkDefinition->GameModeOverride;
+	                                 : BenchmarkDefinition->GameModeOverride.ToString();
 
 	// Override game mode & store the definition path
 	// no need to prepend this with a ? since OpenLevel handles that part for us
